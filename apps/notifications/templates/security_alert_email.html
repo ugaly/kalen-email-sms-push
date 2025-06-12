@@ -1,0 +1,57 @@
+{% extends "base_email_template.html" %}
+
+{% block extra_styles %}
+<style>
+    .email-header {
+        background-color: #F44336;
+        color: white;
+    }
+    .button {
+        background-color: #F44336;
+    }
+    .info-box {
+        border-left-color: #F44336;
+    }
+    .alert-box {
+        background-color: #fff8f8;
+        padding: 20px;
+        border-radius: 4px;
+        margin: 20px 0;
+        border: 1px solid #ffebee;
+    }
+    .warning-icon {
+        font-size: 48px;
+        color: #F44336;
+        text-align: center;
+        margin: 10px 0;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Security Alert - {{ alert_type }}{% endblock %}
+
+{% block content %}
+<p>Hello {{ user_name }},</p>
+
+<div class="alert-box">
+    <div class="warning-icon">⚠️</div>
+    <h3>Important Security Alert</h3>
+    <p>We detected a security event on your account:</p>
+    <p>{{ alert_details }}</p>
+</div>
+
+<p>Details:</p>
+<ul>
+    <li>Time: {{ event_time }}</li>
+    <li>Location: {{ event_location }}</li>
+    <li>Device: {{ device_info }}</li>
+</ul>
+
+<p>If this was you, no action is needed.</p>
+
+<p>If you don't recognize this activity, please secure your account immediately:</p>
+
+<a href="{{ reset_password_url|default:'#' }}" class="button">Secure Your Account</a>
+
+<p>If you have any questions or need assistance, please contact our security team immediately.</p>
+{% endblock %}

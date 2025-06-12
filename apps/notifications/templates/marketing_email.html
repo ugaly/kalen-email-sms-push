@@ -1,0 +1,102 @@
+{% extends "base_email_template.html" %}
+
+{% block extra_styles %}
+<style>
+    .email-header {
+        background-color: #FF9800;
+        color: white;
+    }
+    .button {
+        background-color: #FF9800;
+    }
+    .info-box {
+        border-left-color: #FF9800;
+    }
+    .promo-box {
+        background-color: #fff8e1;
+        padding: 20px;
+        border-radius: 4px;
+        text-align: center;
+        margin: 20px 0;
+        border: 1px dashed #FF9800;
+    }
+    .promo-code {
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        padding: 10px;
+        background: #ffffff;
+        border: 2px dashed #FF9800;
+        display: inline-block;
+        margin: 10px 0;
+    }
+    .featured-products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+    .product-card {
+        width: 48%;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #eeeeee;
+        border-radius: 4px;
+        text-align: center;
+    }
+    .product-image {
+        max-width: 100%;
+        height: auto;
+    }
+    @media only screen and (max-width: 600px) {
+        .product-card {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block content %}
+<p>Hello {{ customer_name }},</p>
+
+<p>{{ greeting_text }}</p>
+
+{% if promo_code %}
+<div class="promo-box">
+    <h3>Special Offer Just For You!</h3>
+    <p>{{ promo_description }}</p>
+    <div class="promo-code">{{ promo_code }}</div>
+    <p>Valid until: {{ promo_expiry }}</p>
+    <a href="{{ promo_url|default:'#' }}" class="button">Shop Now</a>
+</div>
+{% endif %}
+
+{{ message_body|safe }}
+
+{% if featured_products %}
+<h3>Featured Products</h3>
+<div class="featured-products">
+    {% for product in featured_products %}
+    <div class="product-card">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
+        <h4>{{ product.name }}</h4>
+        <p>{{ product.price }}</p>
+        <a href="{{ product.url }}" class="button" style="padding: 8px 15px; font-size: 14px;">View Product</a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<p>{{ closing_text }}</p>
+{% endblock %}
+
+{% block footer %}
+<p>© {{ current_year|default:'2023' }} {{ company_name|default:'Your Company' }}</p>
+<p>
+    <a href="{{ unsubscribe_url|default:'#' }}">Unsubscribe</a> | 
+    <a href="{{ preferences_url|default:'#' }}">Email Preferences</a>
+</p>
+<p>{{ company_address|default:'123 E-commerce St, Online City, OC 12345' }}</p>
+{% endblock %}

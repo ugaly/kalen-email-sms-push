@@ -1,0 +1,79 @@
+{% extends "base_email_template.html" %}
+
+{% block extra_styles %}
+<style>
+    .email-header {
+        background-color: {{ primary_color }};
+        color: white;
+    }
+    .button {
+        background-color: {{ primary_color }};
+    }
+    .info-box {
+        border-left-color: {{ primary_color }};
+    }
+    .order-summary {
+        background-color: #f9fff9;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+    }
+    .order-total {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 15px;
+        text-align: right;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Order Confirmation - #123456{% endblock %}
+
+{% block content %}
+<p>Hello {{ full_name }} {{ last_name }},</p>
+
+<p>{{ templete_content }}</p>
+
+<div class="info-box">
+    <h3>Order #123456</h3>
+    <p>Order Date: 13/06/2025</p>
+</div>
+
+{% if order_items %}
+<h3>Order Summary</h3>
+<table class="order-details">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order_items %}
+        <tr>
+            <td>Demo item</td>
+            <td>2</td>
+            <td>5,000</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="order-total">
+    Total: 5,000
+</div>
+{% else %}
+<div class="order-summary">
+    Order summary itakuwa hapa
+</div>
+{% endif %}
+
+<p>We'll notify you when your order ships. You can check your order status anytime by visiting your account.</p>
+
+<a href="{{ order_url|default:'#' }}" class="button">View Order Details</a>
+
+<p>If you have any questions about your order, please don't hesitate to contact our customer service team.</p>
+
+<p>Thank you for shopping with us!</p>
+{% endblock %}

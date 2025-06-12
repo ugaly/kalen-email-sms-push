@@ -1,0 +1,64 @@
+{% extends "base_email_template.html" %}
+
+{% block extra_styles %}
+<style>
+    .email-header {
+        background-color: #673AB7;
+        color: white;
+    }
+    .button {
+        background-color: #673AB7;
+    }
+    .info-box {
+        border-left-color: #673AB7;
+    }
+    .thank-you-box {
+        background-color: #f5f0ff;
+        padding: 20px;
+        border-radius: 4px;
+        text-align: center;
+        margin: 20px 0;
+    }
+    .product-review {
+        margin-top: 20px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+    }
+    .rating-stars {
+        font-size: 24px;
+        letter-spacing: 5px;
+        color: #FFD700;
+        margin: 10px 0;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Order Delivered - #13d34xyq13{% endblock %}
+
+{% block content %}
+<p>Hello {{ first_name }} {{ last_name }},</p>
+
+<p>Your order has been delivered! We hope you love your purchase.</p>
+
+<div class="info-box">
+    <h3>Order #13d34xyq13</h3>
+    <p>Delivery Date: 13/06/2025</p>
+</div>
+
+<div class="thank-you-box">
+    <h2>Thank You For Your Purchase!</h2>
+    <p>We hope you enjoy your items.</p>
+</div>
+
+<div class="product-review">
+    <h3>How Did We Do?</h3>
+    <p>We'd love to hear about your experience. Please take a moment to review your purchase.</p>
+    <div class="rating-stars">★★★★★</div>
+    <a href="{{ review_url|default:'#' }}" class="button">Write a Review</a>
+</div>
+
+<p>If you have any issues with your order, please contact our customer support team.</p>
+
+<p>Thank you for choosing us!</p>
+{% endblock %}

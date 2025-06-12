@@ -1,0 +1,66 @@
+{% extends "base_email_template.html" %}
+
+{% block extra_styles %}
+<style>
+    .email-header {
+        background-color: #2196F3;
+        color: white;
+    }
+    .button {
+        background-color: #2196F3;
+    }
+    .info-box {
+        border-left-color: #2196F3;
+    }
+    .tracking-box {
+        background-color: #f0f7ff;
+        padding: 20px;
+        border-radius: 4px;
+        text-align: center;
+        margin: 20px 0;
+        border: 1px dashed #2196F3;
+    }
+    .tracking-number {
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin: 10px 0;
+    }
+    .shipping-details {
+        margin-top: 20px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Your Order Has Shipped - #{{ order_number }}{% endblock %}
+
+{% block content %}
+<p>Hello {{ customer_name }},</p>
+
+<p>Great news! Your order has shipped and is on its way to you.</p>
+
+<div class="info-box">
+    <h3>Order #{{ order_number }}</h3>
+    <p>Ship Date: {{ ship_date }}</p>
+</div>
+
+<div class="tracking-box">
+    <h3>Tracking Information</h3>
+    <div class="tracking-number">{{ tracking_number }}</div>
+    <p>Carrier: {{ carrier }}</p>
+    <a href="{{ tracking_url|default:'#' }}" class="button">Track Package</a>
+</div>
+
+<div class="shipping-details">
+    <h3>Shipping Address</h3>
+    <p>{{ shipping_address|safe }}</p>
+    <p>Estimated Delivery: {{ delivery_date }}</p>
+</div>
+
+<p>If you have any questions about your shipment, please don't hesitate to contact our customer service team.</p>
+
+<p>Thank you for shopping with us!</p>
+{% endblock %}
