@@ -729,16 +729,17 @@ spec:
 Test Environment: 4 CPU cores, 8GB RAM, PostgreSQL, Redis
 
 Single Worker Performance:
-├── Email Notifications: 10,000/minute
-├── SMS Notifications: 5,000/minute
-├── Push Notifications: 50,000/minute
-└── Database Writes: 100,000/second
+1. **Email Notifications: ** (`10,000/minute`)
+2. **SMS Notifications: ** (`5,000/minute`)
+3. **Push Notifications: ** (`50,000/minute`)
+4. **Database Writes: ** (`100,000/second`)
 
 Scaled Performance (10 workers):
-├── Email Notifications: 100,000/minute
-├── SMS Notifications: 50,000/minute
-├── Push Notifications: 500,000/minute
-└── Total Throughput: 650,000 notifications/minute
+1. **Email Notifications: ** (`100,000/minute`)
+2. **SMS Notifications: ** (`50,000/minute`)
+3. **Push Notifications: ** (`500,000/minute`)
+
+Total Throughput: 650,000 notifications/minute
 \`\`\`
 
 ### Black Friday Simulation
