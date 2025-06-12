@@ -14,14 +14,14 @@ A scalable, production-ready notification system designed for e-commerce platfor
 - **Template Management**: Dynamic template selection with variable substitution
 - **User Preferences**: Granular notification preferences and quiet hours
 
+
+
 <p align="center">
-  <img src="https://i.ibb.co/4RMd0f92/Screenshot-2025-06-12-at-18-42-51.png" alt="Kalen Screenshot 1" width="200"/>
-  <img src="https://i.ibb.co/pj0136vY/Screenshot-2025-06-12-at-21-22-14.png" alt="Kalen Screenshot 2" width="200"/>
-  <img src="https://i.ibb.co/0WkpgZm/Screenshot-2025-06-12-at-21-33-26.png" alt="Kalen Screenshot 3" width="200"/>
+  <img src="https://i.ibb.co/4RMd0f92/Screenshot-2025-06-12-at-18-42-51.png" width="200" alt="Dashboard Preview"/>
+  <img src="https://i.ibb.co/pj0136vY/Screenshot-2025-06-12-at-21-22-14.png" width="200" alt="Template Editor"/>
+  <img src="https://i.ibb.co/0WkpgZm/Screenshot-2025-06-12-at-21-33-26.png" width="200" alt="Analytics View"/>
+  <img src="https://i.ibb.co/RTSWqJYT/Whats-App-Image-2025-06-12-at-22-39-18.jpg" width="200" alt="Mobile Notification"/>
 </p>
-  <img src="https://i.ibb.co/RTSWqJYT/Whats-App-Image-2025-06-12-at-22-39-18.jpg" alt="Kalen Screenshot 3" width="200"/>
-
-
 
 ## 📋 Table of Contents
 
