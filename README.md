@@ -14,6 +14,11 @@ A scalable, production-ready notification system designed for e-commerce platfor
 - **Template Management**: Dynamic template selection with variable substitution
 - **User Preferences**: Granular notification preferences and quiet hours
 
+![Kalen Notification System](https://i.ibb.co/4RMd0f92/Screenshot-2025-06-12-at-18-42-51.png)
+![Kalen Notification System](https://i.ibb.co/pj0136vY/Screenshot-2025-06-12-at-21-22-14.png)
+![Kalen Notification System](https://i.ibb.co/0WkpgZm/Screenshot-2025-06-12-at-21-33-26.png)
+
+
 ## 📋 Table of Contents
 
 - [Installation](#installation)
@@ -38,7 +43,7 @@ A scalable, production-ready notification system designed for e-commerce platfor
 ### Step 1: Clone the Repository
 
 \`\`\`bash
-git clone https://github.com/your-org/notification-system.git
+git clone https://github.com/ugaly/kalen-email-sms-push.git
 cd notification-system
 \`\`\`
 
