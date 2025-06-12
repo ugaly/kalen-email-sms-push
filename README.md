@@ -14,9 +14,11 @@ A scalable, production-ready notification system designed for e-commerce platfor
 - **Template Management**: Dynamic template selection with variable substitution
 - **User Preferences**: Granular notification preferences and quiet hours
 
-![Kalen Notification System](https://i.ibb.co/4RMd0f92/Screenshot-2025-06-12-at-18-42-51.png)
-![Kalen Notification System](https://i.ibb.co/pj0136vY/Screenshot-2025-06-12-at-21-22-14.png)
-![Kalen Notification System](https://i.ibb.co/0WkpgZm/Screenshot-2025-06-12-at-21-33-26.png)
+<p align="center">
+  <img src="https://i.ibb.co/4RMd0f92/Screenshot-2025-06-12-at-18-42-51.png" alt="Kalen Screenshot 1" width="200"/>
+  <img src="https://i.ibb.co/pj0136vY/Screenshot-2025-06-12-at-21-22-14.png" alt="Kalen Screenshot 2" width="200"/>
+  <img src="https://i.ibb.co/0WkpgZm/Screenshot-2025-06-12-at-21-33-26.png" alt="Kalen Screenshot 3" width="200"/>
+</p>
 
 
 ## 📋 Table of Contents
