@@ -203,19 +203,10 @@ curl -X POST http://localhost:8000/api/v1/notifications/bulk/send/ \\
 
 ### System Components
 
-\`\`\`
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Django API    │────│   Redis Queue   │────│ Celery Workers  │
-│   (REST APIs)   │    │  (Message Bus)  │    │ (Processors)    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   PostgreSQL    │    │   Celery Beat   │    │   External APIs │
-│   (Database)    │    │  (Scheduler)    │    │ (Email/SMS/Push)│
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-\`\`\`
+<p align="center">
+  
+  <img src="https://i.ibb.co/fV0ghFpj/Screenshot-2025-06-12-at-21-36-28.png" width="200" alt="Mobile Notification"/>
+</p>
 
 ### Key Design Patterns
 
