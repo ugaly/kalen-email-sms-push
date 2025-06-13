@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from .models import Notification, NotificationBatch, NotificationLog
+from .models import Notification, NotificationBatch, NotificationCategory, NotificationLog
 from .services import EmailService, SMSService, PushNotificationService
 from datetime import timedelta
 
@@ -329,44 +329,91 @@ def generate_notification_reports():
     
     return stats
 
+# @shared_task
+# def create_bulk_notifications(data):
+#     """Create bulk notifications from serialized data"""
+#     from .serializers import BulkNotificationSerializer
+    
+#     serializer = BulkNotificationSerializer(data=data)
+#     if not serializer.is_valid():
+#         logger.error(f"Invalid bulk notification data: {serializer.errors}")
+#         return
+    
+#     validated_data = serializer.validated_data
+    
+#     if validated_data.get('user_ids'):
+#         users = User.objects.filter(id__in=validated_data['user_ids'])
+#     else:
+#         users = User.objects.filter(**validated_data.get('user_filters', {}))
+    
+#     notifications = []
+#     for user in users:
+#         notification = Notification(
+#             user=user,
+#             category=validated_data['category'],
+#             template=validated_data.get('template'),
+#             notification_type=validated_data['notification_type'],
+#             subject=validated_data.get('subject', ''),
+#             message=validated_data['message'],
+#             metadata=validated_data.get('metadata', {}),
+#             scheduled_at=validated_data.get('scheduled_at', timezone.now()),
+#         )
+        
+#         if notification.notification_type == 'email':
+#             notification.recipient_email = user.email
+#         elif notification.notification_type == 'sms':
+#             notification.recipient_phone = user.phone_number
+        
+#         notifications.append(notification)
+    
+#     created_notifications = Notification.objects.bulk_create(notifications, batch_size=1000)
+    
+#     logger.info(f"Created {len(created_notifications)} bulk notifications")
+#     return len(created_notifications)
+
+
+
 @shared_task
 def create_bulk_notifications(data):
-    """Create bulk notifications from serialized data"""
-    from .serializers import BulkNotificationSerializer
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info("🔥 Celery task started with data: %s", data)
     
-    serializer = BulkNotificationSerializer(data=data)
-    if not serializer.is_valid():
-        logger.error(f"Invalid bulk notification data: {serializer.errors}")
+    try:
+        category = NotificationCategory.objects.get(id=data['category'])
+    except NotificationCategory.DoesNotExist:
+        logger.error("❌ Category not found.")
         return
-    
-    validated_data = serializer.validated_data
-    
-    if validated_data.get('user_ids'):
-        users = User.objects.filter(id__in=validated_data['user_ids'])
-    else:
-        users = User.objects.filter(**validated_data.get('user_filters', {}))
-    
+
+    users = []
+    if data.get('user_ids'):
+        users = User.objects.filter(id__in=data['user_ids'])
+    elif data.get('user_filters'):
+        users = User.objects.filter(**data.get('user_filters'))
+
+    logger.info(f"📨 Sending to {users.count()} users")
+
+    if not users:
+        logger.warning("⚠️ No users found.")
+        return
+
     notifications = []
     for user in users:
         notification = Notification(
             user=user,
-            category=validated_data['category'],
-            template=validated_data.get('template'),
-            notification_type=validated_data['notification_type'],
-            subject=validated_data.get('subject', ''),
-            message=validated_data['message'],
-            metadata=validated_data.get('metadata', {}),
-            scheduled_at=validated_data.get('scheduled_at', timezone.now()),
+            category=category,
+            template=NotificationTemplate.objects.get(id=data['template']) if data.get('template') else None,
+            notification_type=data['notification_type'],
+            subject=data.get('subject', ''),
+            message=data['message'],
+            metadata=data.get('metadata', {}),
+            scheduled_at=data.get('scheduled_at') or timezone.now(),
         )
-        
-        if notification.notification_type == 'email':
+
+        if data['notification_type'] == 'email':
             notification.recipient_email = user.email
-        elif notification.notification_type == 'sms':
-            notification.recipient_phone = user.phone_number
-        
+
         notifications.append(notification)
-    
-    created_notifications = Notification.objects.bulk_create(notifications, batch_size=1000)
-    
-    logger.info(f"Created {len(created_notifications)} bulk notifications")
-    return len(created_notifications)
+
+    Notification.objects.bulk_create(notifications, batch_size=1000)
+    logger.info(f"✅ Created {len(notifications)} notifications.")

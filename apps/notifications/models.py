@@ -173,7 +173,7 @@ class NotificationBatch(models.Model):
         return f"Batch: {self.name} ({self.status})"
 
 class NotificationPreference(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='notification_preferences')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_preferences')
     category = models.ForeignKey(NotificationCategory, on_delete=models.CASCADE)
     
     email_enabled = models.BooleanField(default=True)
@@ -197,3 +197,7 @@ class NotificationPreference(models.Model):
     class Meta:
         db_table = 'notification_preferences'
         unique_together = ['user', 'category']
+
+
+
+

@@ -3,23 +3,34 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from .models import User, UserProfile
 
+
+class UserProfileCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        exclude = ('user', 'created_at', 'updated_at')
+
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, validators=[validate_password])
     password_confirm = serializers.CharField(write_only=True)
-    
+    profile = UserProfileCreateSerializer(required=False)
+
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'password_confirm', 'phone_number')
-    
+        fields = ('email', 'username', 'password', 'password_confirm', 'phone_number', 'profile')
+
     def validate(self, attrs):
         if attrs['password'] != attrs['password_confirm']:
             raise serializers.ValidationError("Passwords don't match")
         return attrs
-    
+
     def create(self, validated_data):
+        profile_data = validated_data.pop('profile', {})
         validated_data.pop('password_confirm')
+
         user = User.objects.create_user(**validated_data)
-        UserProfile.objects.create(user=user)
+        UserProfile.objects.create(user=user, **profile_data)
+
         return user
 
 class UserLoginSerializer(serializers.Serializer):

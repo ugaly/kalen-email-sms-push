@@ -101,8 +101,14 @@ def send_bulk_notifications(request):
     """Send bulk notifications to multiple users"""
     serializer = BulkNotificationSerializer(data=request.data)
     if serializer.is_valid():
-        # Queue the bulk notification task
-        task = create_bulk_notifications.delay(serializer.validated_data)
+        cleaned_data = serializer.validated_data.copy()
+        cleaned_data['category'] = cleaned_data['category'].id
+
+        if cleaned_data.get('template'):
+            cleaned_data['template'] = cleaned_data['template'].id
+
+        task = create_bulk_notifications.delay(cleaned_data)
+
         
         return Response({
             'message': 'Bulk notifications queued successfully',
@@ -119,7 +125,6 @@ def create_notification_batch(request):
     if serializer.is_valid():
         batch = serializer.save()
         
-        # Queue the batch processing task
         task = process_notification_batch.delay(str(batch.id))
         
         return Response({
@@ -224,7 +229,6 @@ def retry_failed_notification(request, notification_id):
         notification.scheduled_at = timezone.now()
         notification.save()
         
-        # Queue the notification again
         from .tasks import send_email_notification, send_sms_notification, send_push_notification
         
         if notification.notification_type == 'email':
