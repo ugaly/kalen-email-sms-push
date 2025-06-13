@@ -185,7 +185,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 # EMAIL_BACKEND = 'anymail.backends.sendgrid.EmailBackend'
 # ANYMAIL = {
-#     'SENDGRID_API_KEY': config('SENDGRID_API_KEY', default='wxmd leha cwgf fwnw'),
+#     'SENDGRID_API_KEY': config('SENDGRID_API_KEY', default=''),
 # }
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='mwalwamaj@gmail.com')
